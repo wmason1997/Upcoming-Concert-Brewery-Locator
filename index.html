@@ -3,11 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel='stylesheet' href="styles.css" />
     <title>Document</title>
 </head>
+
+<header>
+    <h1 id='page-title'>Tunes and Brews</h1>
+</header>
 <body>
+    <section id="description">
+        <h3>We link you up to the newest breweries in your area based on what event you're looking to go to,
+            type in the search bar to get started!
+        </h3>
+    </section>
+
+    <form id="search-bar">
+        <label for="ticketmaster-search">Search for any location, artist or music genre you're looking to see!</label>
+        <input type='text' id="ticketmaster-search" name="ticketmaster-search">
+    </form>
+
+    <form id="checkbox">
+        <input type="checkbox" id="Hip-Hop" name="Hip-Hop" value="yes">
+        <label for="Hip-Hop">Hip-Hop</label><br>
+        
+        <input type="checkbox" id="Rock" name="Rock" value="yes">
+        <label for="Rock">Rock</label><br>
+
+        <input type="checkbox" id="Country" name="Country" value="yes">
+        <label for="Country">Country</label><br>
+
+        <input type="checkbox" id="Pop" name="Pop" value="yes">
+        <label for="Pop">Pop</label><br>
+
+        <input type="checkbox" id="Metal" name="Metal" value="yes">
+        <label for="Metal">Metal</label><br>
+        
+        <input type="checkbox" id="20-miles" name="20-miles" value="yes">
+        <label for="20-miles">Under 20 miles</label><br>
+      </form>
+
+      <div id="datepicker"></div>
+
+      <section id="ticketmaster-search-container" class="list-container">
+        <h4 id="Events-header">Events for: <span id='ticketmaster-search-target'></span></h4>
+        <div id="ticketmaster-api-results-container"></div>
+      </section>
+
+      <section id="brewery-search-container" class="list-container">
+        <h4 id="Events-header">Breweries nearby:<span id='ticketmaster-search-target'></span></h4>
+        <div id="ticketmaster-api-results-container"></div>
+      </section>
+
+
     <p>This is our brewery locator for concert venues!</p>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <script src="/script.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js" async defer></script>.
 </body>
 
 </html>
