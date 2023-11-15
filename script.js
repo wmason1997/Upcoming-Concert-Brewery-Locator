@@ -27,3 +27,11 @@ function getTicketMasterEventsAPI(city="San Diego", keyWord='rock', radius=50) {
 getTicketMasterEventsAPI();
 
 getTicketMasterEventsAPI("Los Angeles", "Pop");
+
+
+//start of calendar functionality
+import DateRangePicker from 'flowbite-datepicker/DateRangePicker';
+const dateRangePickerEl = document.getElementById('#datepicker');
+new DateRangePicker(dateRangePickerEl, {
+
+});
