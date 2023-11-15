@@ -71,7 +71,7 @@ getBreweries('Houston'); // example
 
 
 //start of calendar functionality
-import DateRangePicker from 'flowbite-datepicker/DateRangePicker';
+import DateRangePicker from '/node_modules/flowbite-datepicker/js/DateRangePicker.js';
 const dateRangePickerEl = document.getElementById('#datepicker');
 new DateRangePicker(dateRangePickerEl, {
 
