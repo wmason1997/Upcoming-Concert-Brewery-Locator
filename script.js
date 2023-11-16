@@ -45,17 +45,31 @@ function showTopTenVenues (city) {
     getTicketMasterEventsAPI(city)
     .then(function (response) {
         var listOfEvents = [];
-        for (var i = 0; i < 5;) { // number of events right now is 5
+        for (var i = 0; listOfEvents.length < 5; i++) { // number of events right now is 5
             if (!listOfEvents.includes(response._embedded.events[i].name)) {
-                listOfEvents.push(response._embedded.events[i].name);
-                i++;
-                break
+                listOfEvents.push(response._embedded.events[i].name); // could take off the name here. then would have the 5 data objects to manipulate
+                
             }
-            console.log("show top venues", response._embedded.events[i]);
+            // console.log("show top venues", response._embedded.events[i]);
         }
         console.log(listOfEvents);
     })
 }
+
+// function showTopTenVenuesTwo (city) {
+//     getTicketMasterEventsAPI(city)
+//     .then(function (response) {
+//         var listOfEvents = [];
+//         for (var i = 0; listOfEvents.length < 5; i++) { // number of events right now is 5
+//             if (!listOfEvents.includes(response._embedded.events[i].name)) {
+//                 listOfEvents.push(response._embedded.events[i].name); // could take off the name here. then would have the 5 data objects to manipulate
+                
+//             }
+//             // console.log("show top venues", response._embedded.events[i]);
+//         }
+//         console.log(listOfEvents);
+//     })
+// }
 
 
 showTopTenVenues("Los Angeles");
