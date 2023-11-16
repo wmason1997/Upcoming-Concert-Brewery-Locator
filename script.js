@@ -35,16 +35,39 @@ function getTicketMasterEventsAPI(city="San Diego", keyWord='rock', radius=50) {
         });
 }
 
-getTicketMasterEventsAPI();
+getTicketMasterEventsAPI(city = "Boston", keyWord="rap");
+
 
 // getTicketMasterEventsAPI("Los Angeles", "Pop");
 
+
+function showTopTenVenues (city) {
+    getTicketMasterEventsAPI(city)
+    .then(function (response) {
+        var listOfEvents = [];
+        for (var i = 0; i < 5;) { // number of events right now is 5
+            if (!listOfEvents.includes(response._embedded.events[i].name)) {
+                listOfEvents.push(response._embedded.events[i].name);
+                i++;
+                break
+            }
+            console.log("show top venues", response._embedded.events[i]);
+        }
+        console.log(listOfEvents);
+    })
+}
+
+
+showTopTenVenues("Los Angeles");
+
+
+
 // second
 function venueToBreweriesAPI(informationFromTicketMaster) {
-    var arguments = {venueLat: informationFromTicketMaster.latitude, venueLon: informationFromTicketMaster.longitude};
+    var argums = {venueLat: informationFromTicketMaster.latitude, venueLon: informationFromTicketMaster.longitude};
     var pregameURL = 'https://api.openbrewerydb.org/v1/breweries?by_dist=' + 
-    arguments.venueLat + ',' +
-    arguments.venueLon + 
+    argums.venueLat + ',' +
+    argums.venueLon + 
     'per_page=5';
 
     return fetch(pregameURL)
@@ -71,8 +94,8 @@ getBreweries('Houston'); // example
 
 
 //start of calendar functionality
-import DateRangePicker from 'flowbite-datepicker/DateRangePicker';
-const dateRangePickerEl = document.getElementById('#datepicker');
-new DateRangePicker(dateRangePickerEl, {
+// import DateRangePicker from 'flowbite-datepicker/DateRangePicker';
+// const dateRangePickerEl = document.getElementById('#datepicker');
+// new DateRangePicker(dateRangePickerEl, {
 
-});
+// });
