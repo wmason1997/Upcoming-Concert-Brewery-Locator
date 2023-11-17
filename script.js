@@ -55,9 +55,6 @@ function venueToBreweriesAPI(informationFromTicketMaster) {
         });
 }
 
-// The sequence of the calls chained
-// function combinedAPIcall = 
-
 function getBreweries(city) {
 getTicketMasterEventsAPI(city)
     .then(informationFromTicketMaster => venueToBreweriesAPI(informationFromTicketMaster._embedded.events[0]._embedded.venues[0].location))
@@ -97,7 +94,7 @@ function returnThreeBreweriesForEventVenues (inputListOfEvents) {
     // for loop for the ten breweries
     var exampleOutput = [];
     var requests = []; // to allow for promise.all later
-    for (var i = 0; i < 10; i++) { // may need to use 10 instead. Why does inputListOfEvents.length not work?
+    for (let i = 0; i < 10; i++) { // may need to use 10 instead. Why does inputListOfEvents.length not work?
             //var fedLocation = inputListOfEvents[i];
             // console.log(inputListOfEvents[i]._embedded.venues); // Mimic Michael's picture he sent you
             console.log(inputListOfEvents[i]);
@@ -105,25 +102,55 @@ function returnThreeBreweriesForEventVenues (inputListOfEvents) {
 
             var request = fetch(reqURL)
             .then(function(res){
-                return res.json();
+                return {breweryData: res.json(), eventInfoTwo: inputListOfEvents[i]};
             });//venueToBreweriesAPI(inputListOfEvents[i]._embedded.venues[0].location); // Uncaught TypeError: Cannot read properties of undefined (reading '0') // Ask Michael/Nirav
             requests.push(request);
     }
 
     Promise.all(requests)
     .then(function (results) {
-        console.log(results);
 
+        console.log(results);
         // DOM appending
-    });
+        results.forEach(function(result) {
+            // Extract concert event info
+            var concertName = result.eventInfoTwo.name;
+            var concertDate = result.eventInfoTwo.dates.start.localDate;
+
+            // Create and append heading to DOM
+            var concertHeading = document.createElement('h2');
+            concertHeading.textContent = 'Concert: ' + concertName + ', Date: ' + concertDate;
+            venueBreweriesRecs.appendChild(concertHeading);
+
+            // List a few breweries for each
+            results.forEach(function(breweryData) {
+                var breweryName = result.breweryData.PromiseResults.name;
+                //var breweryAddress = result.breweryData.street + ', ' + result.breweryData.city + ', ' + result.breweryData.state + ' ' + result.breweryData.postal_code;
+
+                // Create a new paragraph element to display brewery information
+                var breweryInfo = document.createElement('p');
+                breweryInfo.textContent = 'Brewery Name: ' + breweryName; //+ ', Address: ' + breweryAddress;
+                
+                // Append the paragraph element to the DOM
+                venueBreweriesRecs.appendChild(breweryInfo);
+            });
+        });
+    })
+    .catch(function (error) {
+        console.error("Error fetching data: ", error);
+    })
+
+    };
     
     
-}
+
 
 //[7]._embedded.venues[0]
 // [0]._embedded.venues[0].location.latitude
 
 //returnThreeBreweriesForEventVenues('Los Angeles');
+    
+
 
 showTopTenVenues("Los Angeles");
 
