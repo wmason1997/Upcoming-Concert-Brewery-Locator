@@ -64,7 +64,6 @@ getTicketMasterEventsAPI(city)
 getBreweries('Houston'); // example
 
 //start of calendar functionality
-<<<<<<< HEAD
 
 function showTopTenVenues (city) {
     getTicketMasterEventsAPI(city)
@@ -152,7 +151,6 @@ showTopTenVenues("Los Angeles");
 
 //returnThreeBreweriesForEventVenues();
 
-=======
 var date;
 $( function() {
     var dateFormat = "mm/dd/yy",
@@ -184,5 +182,31 @@ $( function() {
       return date;
     }
   } );
+
   
->>>>>>> 78b8575a838817cb994d36b1fc0c64ed36f5754f
+  
+var genreApi = '';
+
+var checkboxEl = document.getElementById('checkbox');
+
+ checkboxEl.addEventListener('click', function(event) {
+var targetEl = (event.target);
+targetEl.value = 'yes';
+var targetElText = targetEl.attributes.id.textContent + ', ';
+
+if (targetEl.value === 'yes') {
+  genreApi += targetElText;
+
+  targetEl.addEventListener('click', function(event) {
+    event.target.value = 'no';
+      genreApi -= event.target.attributes.id.textContent;
+  });
+}
+
+
+
+
+console.log(genreApi);
+ });
+
+
