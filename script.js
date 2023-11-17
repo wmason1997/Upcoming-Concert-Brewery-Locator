@@ -2,18 +2,18 @@
 var submitButton = document.getElementById("search-button");
 var inputCity = document.getElementById("ticketmaster-search");
 var venueBreweriesRecs = document.getElementById("brewery-search-container");
+var eventsEl = document.getElementById('ticketmaster-api-results-container')
+var breweryListEl = document.getElementById('brewery-api-results-container')
 
 submitButton.addEventListener("click", function(event) {
     event.preventDefault();
     var searchedCity = inputCity.value.trim();
 
-    getBreweries(searchedCity);
+    showTopTenVenues(searchedCity);
 })
 
 // TicketMaster API Set-up
-
-// first
-function getTicketMasterEventsAPI(city="San Diego", keyWord='rock', radius=50) { 
+function getTicketMasterEventsAPI(city="San Diego", keyWord='rock', radius=20) { 
     var requestURL = 'https://app.ticketmaster.com/discovery/v2/events.json?'  + 
     'keyword='+ keyWord +
     // '&postalCode='+ postalCode + 
@@ -28,133 +28,105 @@ function getTicketMasterEventsAPI(city="San Diego", keyWord='rock', radius=50) {
             return response.json();
         })
         .then(function (data) {
-            // console.log(data);
-            console.log(data._embedded.events[0]._embedded.venues[0].location); // the index i would be the first zero here
-            // console.log(data._embedded.events[0]._embedded.venues[0].location.longitude);
-            // console.log(data._embedded.events[0]._embedded.venues[0].location.latitude);
             return data;
         });
 }
 
-getTicketMasterEventsAPI(city = "Boston", keyWord="rap");
 
-// second
-function venueToBreweriesAPI(informationFromTicketMaster) {
-    var argums = {venueLat: informationFromTicketMaster.latitude, venueLon: informationFromTicketMaster.longitude};
-    var pregameURL = 'https://api.openbrewerydb.org/v1/breweries?by_dist=' + 
-    argums.venueLat + ',' +
-    argums.venueLon + 
-    'per_page=3';
+//largest function
+//stores ticketmaster api data into listofevents var
+var listOfEvents = [];
 
-    return fetch(pregameURL)
+function showTopTenVenues (searchedCity) {
+    getTicketMasterEventsAPI(searchedCity)
+      .then(function (response) {
+        for (var i = 0; listOfEvents.length < 10; i++) { 
+          
+            if (!listOfEvents.includes(response._embedded.events[i].name)) {
+                listOfEvents.push(response._embedded.events[i])};
+                //as it loops through ticketmaster events grabs each long and lat and plugs into arguments for brewery api
+                argums.venueLat = listOfEvents[i]._embedded.venues[0].location.latitude;
+                argums.venueLon = listOfEvents[i]._embedded.venues[0].location.longitude; 
+
+                //calls brewery api once per event, not super effecient but it works, total brewery array will
+                //be filled with same amount of objects matching the i variable in loop
+                venueToBreweriesAPI();
+
+                  //start of DOM appendage
+            var concertName = listOfEvents[i].name;
+            var concertDate = listOfEvents[i].dates.start.localDate;
+            //set results to button to listen for click events
+            var concertHeading = document.createElement('button');
+            //set an id to track what number the result was in the for loop
+            concertHeading.setAttribute('id', i);
+            var concertList = document.createElement('ol');
+            var concertListItem = document.createElement('li');
+            concertHeading.textContent ='Concert: ' + concertName + ', Date: ' + concertDate;
+            concertListItem.appendChild(concertHeading);
+            concertList.appendChild(concertListItem);
+            eventsEl.appendChild(concertList);
+
+
+              //event listener for which concert is clicked
+            concertHeading.addEventListener('click', function(event){
+              // placeholder name for variable n grabs which the id which was assigned to 
+              //each concert list item and will pair the options given with an array from the brewery api call
+              var n = event.target.attributes.id.value;
+
+              var clickCounter = 0;
+              clickCounter++;
+
+              
+              console.log(n);
+              //DOM appendage for brewery Api results
+              //need to edit this block below played around with some dom appendage to try and remove first results
+              //but its 6am and I've been up all night so I'm gonna tap out for now
+              if (clickCounter === 1) {
+              for (r = 0; r <=3; r++) {
+                 var breweryName = document.createElement('h2');
+                  breweryName.textContent = breweryList[n][r].name;
+                  breweryListEl.appendChild(breweryName);
+                  clickCounter = 0;
+              }
+             } else if(clickCounter === 0) {
+              
+              for (r = 0; r <= 3; r++) {
+                breweryName.textContent = breweryList[n][r].name;
+              }
+              clickCounter += 1;
+              }
+            
+            
+          })
+        }
+              console.log(listOfEvents);
+            })
+      };
+
+
+      //declared arguments outside of scope for long and lat so they can be called during ticketmaster api fetch
+    var argums = {venueLat: '', venueLon:''};
+
+  // breweryList holds all the arrays from brewery api call
+      var breweryList = [];
+        function venueToBreweriesAPI() {
+          var pregameURL = 'https://api.openbrewerydb.org/v1/breweries?by_dist=' + 
+            argums.venueLat + ',' +
+             argums.venueLon + 
+            '&per_page=3';
+
+       return fetch(pregameURL)
         .then(function (response){
             return response.json();
         })
         .then(function (data){
-            console.log(data)
+          breweryList.push(data);
+            //console.log(data)
+            console.log(breweryList);
         });
 }
-
-function getBreweries(city) {
-getTicketMasterEventsAPI(city)
-    .then(informationFromTicketMaster => venueToBreweriesAPI(informationFromTicketMaster._embedded.events[0]._embedded.venues[0].location))
-    .catch(error => console.log("Error in the sequence of API calls: ", error));
-}
-
-getBreweries('Houston'); // example
 
 //start of calendar functionality
-
-function showTopTenVenues (city) {
-    getTicketMasterEventsAPI(city)
-    .then(function (response) {
-        var listOfEvents = [];
-        for (var i = 0; listOfEvents.length < 10; i++) { // number of events right now is 5
-            if (!listOfEvents.includes(response._embedded.events[i].name)) {
-                listOfEvents.push(response._embedded.events[i]); // could take off the .name here. then would have the 5 data objects to manipulate
-                
-            }
-            // console.log("show top venues", response._embedded.events[i]);
-        }
-        console.log(listOfEvents);
-        console.log(listOfEvents[0]._embedded.venues[0].location);
-        // return listOfEvents;
-        returnThreeBreweriesForEventVenues(listOfEvents);
-    })
-}
-
-var exampleTen = showTopTenVenues("Los Angeles");
-
-function returnThreeBreweriesForEventVenues (inputListOfEvents) {
-    // for loop for the ten breweries
-    var exampleOutput = [];
-    var requests = []; // to allow for promise.all later
-    for (let i = 0; i < 10; i++) { // may need to use 10 instead. Why does inputListOfEvents.length not work?
-            //var fedLocation = inputListOfEvents[i];
-            // console.log(inputListOfEvents[i]._embedded.venues); // Mimic Michael's picture he sent you
-            console.log(inputListOfEvents[i]);
-            var reqURL = 'https://api.openbrewerydb.org/v1/breweries?by_dist='+ inputListOfEvents[i]._embedded.venues[0].location.latitude + ',' + inputListOfEvents[i]._embedded.venues[0].location.longitude + '&per_page=3';
-
-            var request = fetch(reqURL)
-            .then(function(res){
-              return res.json();
-               // return {breweryData: res.json(), eventInfoTwo: inputListOfEvents[i]};
-            }) .then (function(data){
-              return {breweryData: data, eventInfoTwo: inputListOfEvents[i]};
-            })//venueToBreweriesAPI(inputListOfEvents[i]._embedded.venues[0].location); // Uncaught TypeError: Cannot read properties of undefined (reading '0') // Ask Michael/Nirav
-            requests.push(request);
-    }
-
-    Promise.all(requests)
-    .then(function (results) {
-
-        console.log(results);
-        // DOM appending
-        results.forEach(function(result) {
-            // Extract concert event info
-            var concertName = result.eventInfoTwo.name;
-            var concertDate = result.eventInfoTwo.dates.start.localDate;
-
-            // Create and append heading to DOM
-            var concertHeading = document.createElement('h2');
-            concertHeading.textContent = 'Concert: ' + concertName + ', Date: ' + concertDate;
-            venueBreweriesRecs.appendChild(concertHeading);
-          console.log(result);
-            // List a few breweries for each
-            results.forEach(function(breweryData) {
-                var breweryName = result.breweryData.name;
-                console.log(result.breweryData);
-                //var breweryAddress = result.breweryData.street + ', ' + result.breweryData.city + ', ' + result.breweryData.state + ' ' + result.breweryData.postal_code;
-
-                // Create a new paragraph element to display brewery information
-                var breweryInfo = document.createElement('p');
-                breweryInfo.textContent = 'Brewery Name: ' + breweryName; //+ ', Address: ' + breweryAddress;
-                
-                // Append the paragraph element to the DOM
-                venueBreweriesRecs.appendChild(breweryInfo);
-            });
-        });
-    })
-    .catch(function (error) {
-        console.error("Error fetching data: ", error);
-    })
-
-    };
-    
-    
-
-
-//[7]._embedded.venues[0]
-// [0]._embedded.venues[0].location.latitude
-
-//returnThreeBreweriesForEventVenues('Los Angeles');
-    
-
-
-showTopTenVenues("Los Angeles");
-
-//returnThreeBreweriesForEventVenues();
-
 var date;
 $( function() {
     var dateFormat = "mm/dd/yy",
@@ -187,8 +159,7 @@ $( function() {
     }
   } );
 
-
-  
+//start of checkbox functionality still need to finish
 var genreApi = '';
 
 var checkboxEl = document.getElementById('checkbox');
