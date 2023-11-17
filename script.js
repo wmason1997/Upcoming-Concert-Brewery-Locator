@@ -97,8 +97,11 @@ function returnThreeBreweriesForEventVenues (inputListOfEvents) {
 
             var request = fetch(reqURL)
             .then(function(res){
-                return {breweryData: res.json(), eventInfoTwo: inputListOfEvents[i]};
-            });//venueToBreweriesAPI(inputListOfEvents[i]._embedded.venues[0].location); // Uncaught TypeError: Cannot read properties of undefined (reading '0') // Ask Michael/Nirav
+              return res.json();
+               // return {breweryData: res.json(), eventInfoTwo: inputListOfEvents[i]};
+            }) .then (function(data){
+              return {breweryData: data, eventInfoTwo: inputListOfEvents[i]};
+            })//venueToBreweriesAPI(inputListOfEvents[i]._embedded.venues[0].location); // Uncaught TypeError: Cannot read properties of undefined (reading '0') // Ask Michael/Nirav
             requests.push(request);
     }
 
@@ -116,10 +119,11 @@ function returnThreeBreweriesForEventVenues (inputListOfEvents) {
             var concertHeading = document.createElement('h2');
             concertHeading.textContent = 'Concert: ' + concertName + ', Date: ' + concertDate;
             venueBreweriesRecs.appendChild(concertHeading);
-
+          console.log(result);
             // List a few breweries for each
             results.forEach(function(breweryData) {
-                var breweryName = result.breweryData.PromiseResults.name;
+                var breweryName = result.breweryData.name;
+                console.log(result.breweryData);
                 //var breweryAddress = result.breweryData.street + ', ' + result.breweryData.city + ', ' + result.breweryData.state + ' ' + result.breweryData.postal_code;
 
                 // Create a new paragraph element to display brewery information
@@ -183,7 +187,7 @@ $( function() {
     }
   } );
 
-  
+
   
 var genreApi = '';
 
@@ -209,4 +213,4 @@ if (targetEl.value === 'yes') {
 console.log(genreApi);
  });
 
-
+ 
