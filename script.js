@@ -84,8 +84,7 @@ function showTopTenVenues (searchedCity) {
               
               console.log(n);
               //DOM appendage for brewery Api results
-              //need to edit this block below played around with some dom appendage to try and remove first results
-              //but its 6am and I've been up all night so I'm gonna tap out for now
+              
               if (clickCounter === 1) {
                 breweryListEl.innerHTML = ''; // clears previous breweries displayed upon different event clicks
               for (r = 0; r <=3; r++) {
@@ -166,22 +165,23 @@ $( function() {
   } );
 
 //start of checkbox functionality still need to finish
-var genreApi = '';
+var genreApi = [];
 
 var checkboxEl = document.getElementById('checkbox');
 
  checkboxEl.addEventListener('click', function(event) {
 var targetEl = (event.target);
-targetEl.value = 'yes';
-var targetElText = targetEl.attributes.id.textContent + ', ';
+//targetEl.value = 'yes';
+var targetElText = targetEl.attributes.id.textContent;
+var index = genreApi.indexOf(targetElText);
 
-if (targetEl.value === 'yes') {
-  genreApi += targetElText;
-
-  targetEl.addEventListener('click', function(event) {
-    event.target.value = 'no';
-      genreApi -= event.target.attributes.id.textContent;
-  });
+if (targetEl.value === 'no') {
+  genreApi.push(targetElText);
+  targetEl.value = 'yes';
+} else if (targetEl.value === 'yes') {
+    console.log(index);
+    genreApi.splice(index, 1);
+    targetEl.value = 'no';
 }
 
 
