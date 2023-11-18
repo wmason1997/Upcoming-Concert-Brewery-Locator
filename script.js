@@ -9,6 +9,7 @@ submitButton.addEventListener("click", function(event) {
     event.preventDefault();
     var searchedCity = inputCity.value.trim();
 
+    console.log("Search button clicked for city: ", searchedCity);
     showTopTenVenues(searchedCity);
 })
 
@@ -38,6 +39,10 @@ function getTicketMasterEventsAPI(city="San Diego", keyWord='rock', radius=20) {
 var listOfEvents = [];
 
 function showTopTenVenues (searchedCity) {
+    listOfEvents = []; // reset so that each new search can use the code with newly initialized variables
+    breweryList = []; // reset so that each new search can use the code with newly initialized variables
+    argums = { venueLat: '', venueLon: ''}; // reset so that each new search can use the code with newly initialized variables
+    eventsEl.innerHTML = ''; // added to fix issue similar to repeated brewery appending
     getTicketMasterEventsAPI(searchedCity)
       .then(function (response) {
         for (var i = 0; listOfEvents.length < 10; i++) { 
@@ -82,6 +87,7 @@ function showTopTenVenues (searchedCity) {
               //need to edit this block below played around with some dom appendage to try and remove first results
               //but its 6am and I've been up all night so I'm gonna tap out for now
               if (clickCounter === 1) {
+                breweryListEl.innerHTML = ''; // clears previous breweries displayed upon different event clicks
               for (r = 0; r <=3; r++) {
                  var breweryName = document.createElement('h2');
                   breweryName.textContent = breweryList[n][r].name;
