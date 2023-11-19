@@ -8,7 +8,7 @@
 </head>
 
 <header>
-  <img class="h-sm w-sm" src="/assets/T&B_logo.jpg">
+  <img class="max-w-sm" src="/assets/T&B_logo.jpg">
   <h1 id='page-title', class="bg-tan-300">Tunes and Brews</h1>
 </header>
 <body>
@@ -18,10 +18,11 @@
         </h3>
     </section>
 
-    <div class="inline-flex justify-between bg-stone-800">
-      <input type="text" placeholder="type here to search!" value="" class ="bg-transparent py-1 text-grey-600 px-4 focus:outline-none">
-    <div class="inline bg-tan-300 py-2 px-4 text-gray-600 select-none">search</div>
+    <div class="inline-flex justify-between bg-gray-100 rounded border border-gray-200">
+      <input id="ticketmaster-search" type="text" placeholder="type here to search!" value="" class="bg-transparent py-1 text-gray-600 px-4 focus:outline-none" />
+      <div id="search-buttton" type="button" class="inline focus:bg-gray-200 py-2 px-4 text-gray-600 select-none">search</div>
     </div>
+    
     <form id="search-bar">
         <label for="ticketmaster-search">Search for any city here! Select genres below.</label>
         <input type='text' id="ticketmaster-search" name="ticketmaster-search">
