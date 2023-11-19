@@ -2,8 +2,11 @@
 var submitButton = document.getElementById("search-button");
 var inputCity = document.getElementById("ticketmaster-search");
 var venueBreweriesRecs = document.getElementById("brewery-search-container");
-var eventsEl = document.getElementById('ticketmaster-api-results-container')
-var breweryListEl = document.getElementById('brewery-api-results-container')
+var eventsEl = document.getElementById('ticketmaster-api-results-container');
+var breweryListEl = document.getElementById('brewery-api-results-container');
+var fromDateLocal = localStorage.getItem('storedFrom') || undefined;
+var toDateLocal = localStorage.getItem('storedTo') || undefined;
+
 
 submitButton.addEventListener("click", function(event) {
     event.preventDefault();
@@ -14,15 +17,44 @@ submitButton.addEventListener("click", function(event) {
 })
 
 // TicketMaster API Set-up
-function getTicketMasterEventsAPI(city="San Diego", keyWord='rock', radius=20) { 
+function getTicketMasterEventsAPI(city="San Diego", keyWord='rock', radius='20', desiredStartDate, desiredEndDate) { 
+  if ((desiredStartDate !== undefined && desiredEndDate !== undefined)) { // if there is no date range specified, keep the requestURL as it was before
     var requestURL = 'https://app.ticketmaster.com/discovery/v2/events.json?'  + 
     'keyword='+ keyWord +
-    // '&postalCode='+ postalCode + 
     '&city=' + city + 
-    '&radius=' +radius+
+    '&radius=' + radius +
     '&unit=miles' + 
     '&size=100' +
+    '&startDateTime=' + encodeURIComponent(desiredStartDate + 'T00:00:00Z') +
+    '&endDateTime=' + encodeURIComponent(desiredEndDate + 'T23:59:59Z') +
     '&apikey=Wy4kfV2CuBeyHrZmzpbvUf5VYbT9wXmJ';
+    } else if (desiredStartDate !== undefined && desiredEndDate === undefined) { // if only a start/earliest date is selected
+      var requestURL = 'https://app.ticketmaster.com/discovery/v2/events.json?'  + 
+      'keyword='+ keyWord +
+      '&city=' + city + 
+      '&radius=' + radius +
+      '&unit=miles' + 
+      '&size=100' +
+      '&startDateTime=' + encodeURIComponent(desiredStartDate + 'T00:00:00Z') +
+      '&apikey=Wy4kfV2CuBeyHrZmzpbvUf5VYbT9wXmJ';
+    } else if (desiredStartDate === undefined && desiredEndDate !== undefined) { // if only a last/latest date is selected
+      var requestURL = 'https://app.ticketmaster.com/discovery/v2/events.json?'  + 
+      'keyword='+ keyWord +
+      '&city=' + city + 
+      '&radius=' + radius +
+      '&unit=miles' + 
+      '&size=100' +
+      '&endDateTime=' + encodeURIComponent(desiredEndDate + 'T23:59:59Z') +
+      '&apikey=Wy4kfV2CuBeyHrZmzpbvUf5VYbT9wXmJ';
+    } else { // if there is a date range specified, add it as a parameter to the URL
+      var requestURL = 'https://app.ticketmaster.com/discovery/v2/events.json?'  + 
+      'keyword='+ keyWord +
+      '&city=' + city + 
+      '&radius=' + radius +
+      '&unit=miles' + 
+      '&size=100' +
+      '&apikey=Wy4kfV2CuBeyHrZmzpbvUf5VYbT9wXmJ';
+      };
 
     return fetch(requestURL)
         .then(function (response) {
@@ -152,7 +184,20 @@ $( function() {
       })
       .on( "change", function() {
         from.datepicker( "option", "maxDate", getDate( this ) );
+        updateLocalStorage();
       });
+
+      // Load dates from localStorage upon page refresh/load
+      var storedFrom = localStorage.getItem('storedFrom');
+      var storedTo = localStorage.getItem('storedTo');
+      if (storedFrom && storedTo) {
+        from.datepicker('setDate', new Date(storedFrom));
+        to.datepicker('setDate', new Date(storedTo));
+      } if (storedFrom) {
+        from.datepicker('setDate', new Date)
+      } else if (storedTo) {
+        to.datepicker('setDate', new Date(storedTo));
+      }
  
     function getDate( element ) {
       try {
@@ -163,6 +208,13 @@ $( function() {
       console.log(date);
       return date;
     }
+
+    function updateLocalStorage() {
+      // get selected dates from page
+      var fromDate = from.datepicker('getDate');
+      var toDate = to.datepicker('getDate')
+    }
+
   } );
 
 //start of checkbox functionality still need to finish
