@@ -15,7 +15,7 @@ module.exports = {
       'orange': '#a16737',
       'tan': '#bc9a71',
       'white': '#ccc0b2',
-      'light grey': '#b3b2ad',
+      'grey': '#b3b2ad',
       'blue': '#506667',
       'brown': '#472c10',
     },
@@ -34,5 +34,5 @@ module.exports = {
     }
   },
   plugins: ['flowbite/plugin'],
-}
+};
 
