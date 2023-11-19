@@ -20,7 +20,7 @@ module.exports = {
       'brown': '#472c10',
     },
     fontFamily: {
-      sans: ['graphik', 'snas-serif'],
+      mono: ['monospace', 'ui-monospace'],
       serif: ['Merriweather','serif'],
     },
     extend: {
