@@ -26,7 +26,7 @@ function getTicketMasterEventsAPI(
   city = "San Diego",
   desiredStartDate = "",
   desiredEndDate = "",
-  keyWord = "rock",
+  keyWord = genreString,
   radius = "20"
 ) {
   // Check if there is a date range specified
@@ -147,35 +147,6 @@ function showTopTenVenues (searchedCity) {
     console.log(listOfEvents);
   });
 }
-              var clickCounter = 0;
-              clickCounter++;
-
-              
-              console.log(n);
-              //DOM appendage for brewery Api results
-              
-              if (clickCounter === 1) {
-                breweryListEl.innerHTML = ''; // clears previous breweries displayed upon different event clicks
-              for (r = 0; r <=3; r++) {
-                 var breweryName = document.createElement('h2');
-                  breweryName.textContent = breweryList[n][r].name;
-                  breweryListEl.appendChild(breweryName);
-                  clickCounter = 0;
-              }
-             } else if(clickCounter === 0) {
-              
-              for (r = 0; r <= 3; r++) {
-                breweryName.textContent = breweryList[n][r].name;
-              }
-              clickCounter += 1;
-              }
-            
-            
-          })
-        }
-              console.log(listOfEvents);
-            })
-      };
 
 
 //declared arguments outside of scope for long and lat so they can be called during ticketmaster api fetch
