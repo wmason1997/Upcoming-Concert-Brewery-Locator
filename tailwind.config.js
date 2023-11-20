@@ -12,12 +12,14 @@ module.exports = {
       xl: '1500px',
     },
     colors: {
-      'orange': '#a16737',
-      'tan': '#bc9a71',
-      'white': '#ccc0b2',
-      'grey': '#b3b2ad',
-      'blue': '#506667',
-      'brown': '#472c10',
+      transparent: 'transparent',
+      current: 'currentColor',
+      black: colors.black,
+      white: colors.white,
+      gray: colors.gray,
+      emerald: colors.emerald,
+      indigo: colors.indigo,
+      yellow: colors.yellow,
     },
     fontFamily: {
       mono: ['monospace', 'ui-monospace'],
@@ -34,5 +36,5 @@ module.exports = {
     }
   },
   plugins: ['flowbite/plugin'],
-};
+}
 

@@ -8,45 +8,84 @@
 </head>
 
 <header>
-  <img class="max-w-sm" src="/assets/T&B_logo.jpg">
-  <h1 id='page-title', class="bg-tan-300">Tunes and Brews</h1>
+  <div class="container w-sm">
+    <img class="object-none" src="/assets/T&B_logo.jpg">
+  </div>
+  <h1 id='page-title'>Tunes and Brews</h1>
 </header>
-<body>
+<body class="h-screen bg-gradient-to-b from-sky-700 to-sky-100">
     <section id="description">
         <h3>We link you up to the newest breweries in your area based on what event you're looking to go to,
             type in the search bar to get started!
         </h3>
     </section>
-
-    <div class="inline-flex justify-between bg-gray-100 rounded border border-gray-200">
-      <input id="ticketmaster-search" type="text" placeholder="type here to search!" value="" class="bg-transparent py-1 text-gray-600 px-4 focus:outline-none" />
-      <div id="search-buttton" type="button" class="inline focus:bg-gray-200 py-2 px-4 text-gray-600 select-none">search</div>
-    </div>
     
     <form id="search-bar">
         <label for="ticketmaster-search">Search for any city here! Select genres below.</label>
         <input type='text' id="ticketmaster-search" name="ticketmaster-search">
-        <button id="search-button" class = "bg-sky-500 focus:bg-sky-700" type="button">Search!</button>
+        <button id="search-button" class = "bg-red-500 focus:bg-red-700 object-right" type="button">Search!</button>
     </form>
 
     <form id="checkbox">
-        <input type="checkbox" id="Hip-Hop" name="Hip-Hop" value="yes">
-        <label for="Hip-Hop">Hip-Hop</label><br>
-        
-        <input type="checkbox" id="Rock" name="Rock" value="yes">
-        <label for="Rock">Rock</label><br>
-
-        <input type="checkbox" id="Country" name="Country" value="yes">
-        <label for="Country">Country</label><br>
-
-        <input type="checkbox" id="Pop" name="Pop" value="yes">
-        <label for="Pop">Pop</label><br>
-
-        <input type="checkbox" id="Metal" name="Metal" value="yes">
-        <label for="Metal">Metal</label><br>
-        
-        <input type="checkbox" id="20-miles" name="20-miles" value="yes">
-        <label for="20-miles">Under 20 miles</label><br>
+      <ul class="flex flex-col py4">
+        <li>
+          <a href="#" class="flex flex-row items-center h-12 text-gray-500">
+            <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class="bx bx-home"></i></span>
+            <input type="checkbox" id="Hip-Hop" name="Hip-Hop" value="yes">
+            <label for="Hip-Hop">Hip-Hop</label><br>
+          </a>
+        </li>
+      </ul>
+      
+      <ul class="flex flex-col py4">
+        <li>
+          <a href="#" class="flex flex-row items-center h-12 text-gray-500">
+            <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class="bx bx-home"></i></span>
+            <input type="checkbox" id="Rock" name="Rock" value="yes">
+            <label for="Rock">Rock</label><br>
+          </a>
+        </li>
+      </ul>
+      
+      <ul class="flex flex-col py4">
+        <li>
+          <a href="#" class="flex flex-row items-center h-12 text-gray-500">
+            <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class="bx bx-home"></i></span>
+            <input type="checkbox" id="Country" name="Country" value="yes">
+            <label for="Country">Country</label><br>
+          </a>
+        </li>
+      </ul>  
+      
+      <ul class="flex flex-col py4">
+        <li>
+          <a href="#" class="flex flex-row items-center h-12 text-gray-500">
+            <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class="bx bx-home"></i></span>
+            <input type="checkbox" id="Pop" name="Pop" value="yes">
+            <label for="Pop">Pop</label><br>
+          </a>
+        </li>
+      </ul>
+      
+      <ul class="flex flex-col py4">
+        <li>
+          <a href="#" class="flex flex-row items-center h-12 text-gray-500">
+            <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class="bx bx-home"></i></span>
+            <input type="checkbox" id="Metal" name="Metal" value="yes">
+            <label for="Metal">Metal</label><br>
+          </a>
+        </li>
+      </ul>
+      
+      <ul class="flex flex-col py4">
+        <li>
+          <a href="#" class="flex flex-row items-center h-12 text-gray-500">
+            <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class="bx bx-home"></i></span>
+            <input type="checkbox" id="20-miles" name="20-miles" value="yes">
+            <label for="20-miles">Under 20 miles</label><br>
+          </a>
+        </li>
+      </ul>
       </form>
       
     <label for="from">From</label>
