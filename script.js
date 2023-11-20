@@ -24,15 +24,6 @@ submitButton.addEventListener("click", function(event) {
 })
 
 // TicketMaster API Set-up
-function getTicketMasterEventsAPI(city="San Diego", keyWord='Music', radius=50) { 
-    var requestURL = 'https://app.ticketmaster.com/discovery/v2/events.json?'  + 
-    'keyword='+ keyWord +
-    // '&postalCode='+ postalCode + 
-    '&city=' + city + 
-    '&radius=' +radius+
-    '&unit=miles' + 
-    '&size=100' +
-    '&apikey=Wy4kfV2CuBeyHrZmzpbvUf5VYbT9wXmJ';
 // function getTicketMasterEventsAPI(city="San Diego", keyWord='rock', radius='20', desiredStartDate, desiredEndDate) { 
 //   if ((desiredStartDate !== undefined && desiredEndDate !== undefined)) { // if there is no date range specified, keep the requestURL as it was before
 //     var requestURL = 'https://app.ticketmaster.com/discovery/v2/events.json?'  + 
@@ -81,7 +72,8 @@ function getTicketMasterEventsAPI(city="San Diego", keyWord='Music', radius=50) 
 //         });
 // }
 
-function getTicketMasterEventsAPI(city = 'San Diego', desiredStartDate = '', desiredEndDate = '', keyWord = 'rock', radius = '20') {
+
+function getTicketMasterEventsAPI(city = 'San Diego', desiredStartDate = '', desiredEndDate = '', keyWord = genreString, radius = '20') {
   // Check if there is a date range specified
   var dateParams = '';
   if (desiredStartDate && desiredEndDate) {
@@ -112,10 +104,10 @@ function getTicketMasterEventsAPI(city = 'San Diego', desiredStartDate = '', des
 }
 
 
-
 //largest function
 //stores ticketmaster api data into listofevents var
 var listOfEvents = [];
+
 
 function showTopTenVenues (searchedCity) {
     listOfEvents = []; // reset so that each new search can use the code with newly initialized variables
@@ -208,7 +200,8 @@ function showTopTenVenues (searchedCity) {
             //console.log(data)
             console.log(breweryList);
         });
-}
+    }
+
 
 //start of calendar functionality
 var date;
@@ -277,6 +270,7 @@ $( function() {
 
 //start of checkbox functionality
 var genreApi = [];
+var genreString = '';
 
 var checkboxEl = document.getElementById('checkbox');
 
@@ -299,10 +293,14 @@ if (targetEl.value === 'no') {
 //"KnvZfZ7vAvt" Metal
 //"KnvZfZ7vAeA" Rock
 //"KnvZfZ7vAev" Pop
+//"KnvZfZ7vAv1" Hip-Hop/Rap
+//"KnvZfZ7vAvv" Alternative
+
+genreString = genreApi.toString();
+    
 
 
-
+console.log(genreString);
 console.log(genreApi);
- });
+})
 
- 

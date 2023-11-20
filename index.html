@@ -8,8 +8,6 @@
 </head>
 
 <header>
-    <h1 class="bg-red-500">
-        Hello world!
     <h1 id='page-title'>Tunes and Brews</h1>
 </header>
 <body>
@@ -20,13 +18,14 @@
     </section>
 
     <form id="search-bar">
-        <label for="ticketmaster-search">Search for any city here! Select genres below.</label>
+        <label for="ticketmaster-search">Search for any city here!</label>
         <input type='text' id="ticketmaster-search" name="ticketmaster-search">
         <button id="search-button" class = "bg-sky-500 focus:bg-sky-700" type="button">Search!</button>
     </form>
 
     <form id="checkbox">
-        <input type="checkbox" id="Hip-Hop" name="Hip-Hop" value="no">
+      <div>Select a Genre</div>
+        <input type="checkbox" id="Hip-Hop" name="Hip-Hop" value="no" data-index="">
         <label for="Hip-Hop">Hip-Hop</label><br>
         
         <input type="checkbox" id="Rock" name="Rock" value="no">
