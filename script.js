@@ -14,7 +14,7 @@ submitButton.addEventListener("click", function(event) {
 })
 
 // TicketMaster API Set-up
-function getTicketMasterEventsAPI(city="San Diego", keyWord='rock', radius=20) { 
+function getTicketMasterEventsAPI(city="San Diego", keyWord='Music', radius=50) { 
     var requestURL = 'https://app.ticketmaster.com/discovery/v2/events.json?'  + 
     'keyword='+ keyWord +
     // '&postalCode='+ postalCode + 
@@ -164,7 +164,7 @@ $( function() {
     }
   } );
 
-//start of checkbox functionality still need to finish
+//start of checkbox functionality
 var genreApi = [];
 
 var checkboxEl = document.getElementById('checkbox');
@@ -184,6 +184,10 @@ if (targetEl.value === 'no') {
     targetEl.value = 'no';
 }
 
+//genre codes
+//"KnvZfZ7vAvt" Metal
+//"KnvZfZ7vAeA" Rock
+//"KnvZfZ7vAev" Pop
 
 
 
