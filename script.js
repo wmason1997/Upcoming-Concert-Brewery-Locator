@@ -26,7 +26,7 @@ function getTicketMasterEventsAPI(
   city = "San Diego",
   desiredStartDate = "",
   desiredEndDate = "",
-  keyWord = "rock",
+  keyWord = genreString,
   radius = "20"
 ) {
   // Check if there is a date range specified
@@ -81,23 +81,20 @@ function getTicketMasterEventsAPI(
 //stores ticketmaster api data into listofevents var
 var listOfEvents = [];
 
-function showTopTenVenues(searchedCity) {
-  listOfEvents = []; // reset so that each new search can use the code with newly initialized variables
-  breweryList = []; // reset so that each new search can use the code with newly initialized variables
-  argums = { venueLat: "", venueLon: "" }; // reset so that each new search can use the code with newly initialized variables
-  eventsEl.innerHTML = ""; // added to fix issue similar to repeated brewery appending
-  getTicketMasterEventsAPI(
-    (city = searchedCity),
-    (desiredStartDate = localStorage.getItem("storedFrom")),
-    (desiredEndDate = localStorage.getItem("storedTo"))
-  ).then(function (response) {
-    for (var i = 0; listOfEvents.length < 10; i++) {
-      if (!listOfEvents.includes(response._embedded.events[i].name)) {
-        listOfEvents.push(response._embedded.events[i]);
-      }
-      //as it loops through ticketmaster events grabs each long and lat and plugs into arguments for brewery api
-      argums.venueLat = listOfEvents[i]._embedded.venues[0].location.latitude;
-      argums.venueLon = listOfEvents[i]._embedded.venues[0].location.longitude;
+function showTopTenVenues (searchedCity) {
+    listOfEvents = []; // reset so that each new search can use the code with newly initialized variables
+    breweryList = []; // reset so that each new search can use the code with newly initialized variables
+    argums = { venueLat: '', venueLon: ''}; // reset so that each new search can use the code with newly initialized variables
+    eventsEl.innerHTML = ''; // added to fix issue similar to repeated brewery appending
+    getTicketMasterEventsAPI(city=searchedCity, desiredStartDate = localStorage.getItem('storedFrom'), desiredEndDate = localStorage.getItem('storedTo'))
+      .then(function (response) {
+        for (var i = 0; listOfEvents.length < 10; i++) { 
+          
+            if (!listOfEvents.includes(response._embedded.events[i].name)) {
+                listOfEvents.push(response._embedded.events[i])};
+                //as it loops through ticketmaster events grabs each long and lat and plugs into arguments for brewery api
+                argums.venueLat = listOfEvents[i]._embedded.venues[0].location.latitude;
+                argums.venueLon = listOfEvents[i]._embedded.venues[0].location.longitude; 
 
       //calls brewery api once per event, not super effecient but it works, total brewery array will
       //be filled with same amount of objects matching the i variable in loop
@@ -150,6 +147,7 @@ function showTopTenVenues(searchedCity) {
     console.log(listOfEvents);
   });
 }
+
 
 //declared arguments outside of scope for long and lat so they can be called during ticketmaster api fetch
 var argums = { venueLat: "", venueLon: "" };
@@ -241,24 +239,39 @@ $(function () {
   }
 });
 
-//start of checkbox functionality still need to finish
-var genreApi = "";
+//start of checkbox functionality
+var genreApi = [];
+var genreString = "";
 
 var checkboxEl = document.getElementById("checkbox");
 
-checkboxEl.addEventListener("click", function (event) {
-  var targetEl = event.target;
-  targetEl.value = "yes";
-  var targetElText = targetEl.attributes.id.textContent + ", ";
+ checkboxEl.addEventListener('click', function(event) {
+var targetEl = (event.target);
+//targetEl.value = 'yes';
+var targetElText = targetEl.attributes.id.textContent;
+var index = genreApi.indexOf(targetElText);
 
-  if (targetEl.value === "yes") {
-    genreApi += targetElText;
+if (targetEl.value === 'no') {
+  genreApi.push(targetElText);
+  targetEl.value = 'yes';
+} else if (targetEl.value === 'yes') {
+    console.log(index);
+    genreApi.splice(index, 1);
+    targetEl.value = 'no';
+}
 
-    targetEl.addEventListener("click", function (event) {
-      event.target.value = "no";
-      genreApi -= event.target.attributes.id.textContent;
-    });
-  }
+//genre codes
+//"KnvZfZ7vAvt" Metal
+//"KnvZfZ7vAeA" Rock
+//"KnvZfZ7vAev" Pop
+//"KnvZfZ7vAv1" Hip-Hop/Rap
+//"KnvZfZ7vAvv" Alternative
 
-  console.log(genreApi);
-});
+genreString = genreApi.toString();
+    
+
+
+console.log(genreString);
+console.log(genreApi);
+})
+
