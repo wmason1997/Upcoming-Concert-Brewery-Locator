@@ -24,7 +24,6 @@ submitButton.addEventListener("click", function(event) {
 })
 
 // TicketMaster API Set-up
-<<<<<<< HEAD
 function getTicketMasterEventsAPI(city="San Diego", keyWord='Music', radius=50) { 
     var requestURL = 'https://app.ticketmaster.com/discovery/v2/events.json?'  + 
     'keyword='+ keyWord +
@@ -34,7 +33,6 @@ function getTicketMasterEventsAPI(city="San Diego", keyWord='Music', radius=50) 
     '&unit=miles' + 
     '&size=100' +
     '&apikey=Wy4kfV2CuBeyHrZmzpbvUf5VYbT9wXmJ';
-=======
 // function getTicketMasterEventsAPI(city="San Diego", keyWord='rock', radius='20', desiredStartDate, desiredEndDate) { 
 //   if ((desiredStartDate !== undefined && desiredEndDate !== undefined)) { // if there is no date range specified, keep the requestURL as it was before
 //     var requestURL = 'https://app.ticketmaster.com/discovery/v2/events.json?'  + 
@@ -73,7 +71,6 @@ function getTicketMasterEventsAPI(city="San Diego", keyWord='Music', radius=50) 
 //       '&size=100' +
 //       '&apikey=Wy4kfV2CuBeyHrZmzpbvUf5VYbT9wXmJ';
 //       };
->>>>>>> 2afab59b661c74c0dd74925395b81ce5875c5deb
 
 //     return fetch(requestURL)
 //         .then(function (response) {
@@ -298,7 +295,6 @@ if (targetEl.value === 'no') {
     targetEl.value = 'no';
 }
 
-<<<<<<< HEAD
 //genre codes
 //"KnvZfZ7vAvt" Metal
 //"KnvZfZ7vAeA" Rock
@@ -306,8 +302,7 @@ if (targetEl.value === 'no') {
 
 
 
-=======
->>>>>>> 2afab59b661c74c0dd74925395b81ce5875c5deb
 console.log(genreApi);
  });
 
+ 
