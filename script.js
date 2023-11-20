@@ -4,8 +4,15 @@ var inputCity = document.getElementById("ticketmaster-search");
 var venueBreweriesRecs = document.getElementById("brewery-search-container");
 var eventsEl = document.getElementById('ticketmaster-api-results-container');
 var breweryListEl = document.getElementById('brewery-api-results-container');
-var fromDateLocal = localStorage.getItem('storedFrom') || undefined;
-var toDateLocal = localStorage.getItem('storedTo') || undefined;
+
+var storedFrom = localStorage.getItem('storedFrom');
+var storedTo = localStorage.getItem('storedTo');
+
+console.log('storedFrom: ', storedFrom);
+console.log('storedTo:', storedTo);
+
+var fromDateLocal = storedFrom ? new Date(storedFrom) : undefined;
+var toDateLocal = storedTo ? new Date(storedTo) : undefined;
 
 
 submitButton.addEventListener("click", function(event) {
@@ -17,53 +24,84 @@ submitButton.addEventListener("click", function(event) {
 })
 
 // TicketMaster API Set-up
-function getTicketMasterEventsAPI(city="San Diego", keyWord='rock', radius='20', desiredStartDate, desiredEndDate) { 
-  if ((desiredStartDate !== undefined && desiredEndDate !== undefined)) { // if there is no date range specified, keep the requestURL as it was before
-    var requestURL = 'https://app.ticketmaster.com/discovery/v2/events.json?'  + 
-    'keyword='+ keyWord +
-    '&city=' + city + 
-    '&radius=' + radius +
-    '&unit=miles' + 
-    '&size=100' +
-    '&startDateTime=' + encodeURIComponent(desiredStartDate + 'T00:00:00Z') +
-    '&endDateTime=' + encodeURIComponent(desiredEndDate + 'T23:59:59Z') +
-    '&apikey=Wy4kfV2CuBeyHrZmzpbvUf5VYbT9wXmJ';
-    } else if (desiredStartDate !== undefined && desiredEndDate === undefined) { // if only a start/earliest date is selected
-      var requestURL = 'https://app.ticketmaster.com/discovery/v2/events.json?'  + 
-      'keyword='+ keyWord +
-      '&city=' + city + 
-      '&radius=' + radius +
-      '&unit=miles' + 
-      '&size=100' +
-      '&startDateTime=' + encodeURIComponent(desiredStartDate + 'T00:00:00Z') +
-      '&apikey=Wy4kfV2CuBeyHrZmzpbvUf5VYbT9wXmJ';
-    } else if (desiredStartDate === undefined && desiredEndDate !== undefined) { // if only a last/latest date is selected
-      var requestURL = 'https://app.ticketmaster.com/discovery/v2/events.json?'  + 
-      'keyword='+ keyWord +
-      '&city=' + city + 
-      '&radius=' + radius +
-      '&unit=miles' + 
-      '&size=100' +
-      '&endDateTime=' + encodeURIComponent(desiredEndDate + 'T23:59:59Z') +
-      '&apikey=Wy4kfV2CuBeyHrZmzpbvUf5VYbT9wXmJ';
-    } else { // if there is a date range specified, add it as a parameter to the URL
-      var requestURL = 'https://app.ticketmaster.com/discovery/v2/events.json?'  + 
-      'keyword='+ keyWord +
-      '&city=' + city + 
-      '&radius=' + radius +
-      '&unit=miles' + 
-      '&size=100' +
-      '&apikey=Wy4kfV2CuBeyHrZmzpbvUf5VYbT9wXmJ';
-      };
+// function getTicketMasterEventsAPI(city="San Diego", keyWord='rock', radius='20', desiredStartDate, desiredEndDate) { 
+//   if ((desiredStartDate !== undefined && desiredEndDate !== undefined)) { // if there is no date range specified, keep the requestURL as it was before
+//     var requestURL = 'https://app.ticketmaster.com/discovery/v2/events.json?'  + 
+//     'keyword='+ keyWord +
+//     '&city=' + city + 
+//     '&radius=' + radius +
+//     '&unit=miles' + 
+//     '&size=100' +
+//     '&startDateTime=' + encodeURIComponent(desiredStartDate + 'T00:00:00Z') +
+//     '&endDateTime=' + encodeURIComponent(desiredEndDate + 'T23:59:59Z') +
+//     '&apikey=Wy4kfV2CuBeyHrZmzpbvUf5VYbT9wXmJ';
+//     } else if (desiredStartDate !== undefined && desiredEndDate === undefined) { // if only a start/earliest date is selected
+//       var requestURL = 'https://app.ticketmaster.com/discovery/v2/events.json?'  + 
+//       'keyword='+ keyWord +
+//       '&city=' + city + 
+//       '&radius=' + radius +
+//       '&unit=miles' + 
+//       '&size=100' +
+//       '&startDateTime=' + encodeURIComponent(desiredStartDate + 'T00:00:00Z') +
+//       '&apikey=Wy4kfV2CuBeyHrZmzpbvUf5VYbT9wXmJ';
+//     } else if (desiredStartDate === undefined && desiredEndDate !== undefined) { // if only a last/latest date is selected
+//       var requestURL = 'https://app.ticketmaster.com/discovery/v2/events.json?'  + 
+//       'keyword='+ keyWord +
+//       '&city=' + city + 
+//       '&radius=' + radius +
+//       '&unit=miles' + 
+//       '&size=100' +
+//       '&endDateTime=' + encodeURIComponent(desiredEndDate + 'T23:59:59Z') +
+//       '&apikey=Wy4kfV2CuBeyHrZmzpbvUf5VYbT9wXmJ';
+//     } else { // if there is a date range specified, add it as a parameter to the URL
+//       var requestURL = 'https://app.ticketmaster.com/discovery/v2/events.json?'  + 
+//       'keyword='+ keyWord +
+//       '&city=' + city + 
+//       '&radius=' + radius +
+//       '&unit=miles' + 
+//       '&size=100' +
+//       '&apikey=Wy4kfV2CuBeyHrZmzpbvUf5VYbT9wXmJ';
+//       };
 
-    return fetch(requestURL)
-        .then(function (response) {
-            return response.json();
-        })
-        .then(function (data) {
-            return data;
-        });
+//     return fetch(requestURL)
+//         .then(function (response) {
+//             return response.json();
+//         })
+//         .then(function (data) {
+//             return data;
+//         });
+// }
+
+function getTicketMasterEventsAPI(city = 'San Diego', desiredStartDate = '', desiredEndDate = '', keyWord = 'rock', radius = '20') {
+  // Check if there is a date range specified
+  var dateParams = '';
+  if (desiredStartDate && desiredEndDate) {
+    dateParams = '&startDateTime=' + encodeURIComponent(dayjs(desiredStartDate).format('YYYY-MM-DDTHH:mm:ss') + 'Z') +
+                 '&endDateTime=' + encodeURIComponent(dayjs(desiredEndDate).format('YYYY-MM-DDTHH:mm:ss') + 'Z');
+  } else if (desiredStartDate) {
+    dateParams = '&startDateTime=' + encodeURIComponent(dayjs(desiredStartDate).format('YYYY-MM-DDTHH:mm:ss') + 'Z');
+  } else if (desiredEndDate) {
+    dateParams = '&endDateTime=' + encodeURIComponent(dayjs(desiredEndDate).format('YYYY-MM-DDTHH:mm:ss') + 'Z');
+  }
+
+  var requestURL = 'https://app.ticketmaster.com/discovery/v2/events.json?' +
+                   'keyword=' + keyWord +
+                   '&city=' + city +
+                   '&radius=' + radius +
+                   '&unit=miles' +
+                   '&size=100' +
+                   dateParams +
+                   '&apikey=Wy4kfV2CuBeyHrZmzpbvUf5VYbT9wXmJ';
+
+  return fetch(requestURL)
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      return data;
+    });
 }
+
 
 
 //largest function
@@ -75,7 +113,7 @@ function showTopTenVenues (searchedCity) {
     breweryList = []; // reset so that each new search can use the code with newly initialized variables
     argums = { venueLat: '', venueLon: ''}; // reset so that each new search can use the code with newly initialized variables
     eventsEl.innerHTML = ''; // added to fix issue similar to repeated brewery appending
-    getTicketMasterEventsAPI(searchedCity)
+    getTicketMasterEventsAPI(city=searchedCity, desiredStartDate = localStorage.getItem('storedFrom'), desiredEndDate = localStorage.getItem('storedTo'))
       .then(function (response) {
         for (var i = 0; listOfEvents.length < 10; i++) { 
           
@@ -176,6 +214,7 @@ $( function() {
         })
         .on( "change", function() {
           to.datepicker( "option", "minDate", getDate( this ) );
+          updateLocalStorage();
         }),
       to = $( "#to" ).datepicker({
         defaultDate: "+1w",
@@ -194,7 +233,7 @@ $( function() {
         from.datepicker('setDate', new Date(storedFrom));
         to.datepicker('setDate', new Date(storedTo));
       } if (storedFrom) {
-        from.datepicker('setDate', new Date)
+        from.datepicker('setDate', new Date(storedFrom));
       } else if (storedTo) {
         to.datepicker('setDate', new Date(storedTo));
       }
@@ -213,6 +252,17 @@ $( function() {
       // get selected dates from page
       var fromDate = from.datepicker('getDate');
       var toDate = to.datepicker('getDate')
+
+      // Check if both dates are selected
+      if (fromDate && toDate) {
+        // Format dates with dayJS
+        var formattedFrom = dayjs(fromDate).format('YYYY-MM-DD');
+        var formattedTo = dayjs(toDate).format('YYYY-MM-DD');
+
+        // Store formatted dates in localStorage
+        localStorage.setItem('storedFrom', JSON.stringify(formattedFrom));
+        localStorage.setItem('storedTo', JSON.stringify(formattedTo));
+      }
     }
 
   } );
@@ -236,10 +286,6 @@ if (targetEl.value === 'yes') {
   });
 }
 
-
-
-
 console.log(genreApi);
  });
 
- 
