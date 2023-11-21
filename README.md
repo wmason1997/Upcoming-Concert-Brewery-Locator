@@ -19,8 +19,14 @@ Andrew Seatter: HTML set-up, Open Brewery API calls, DOM appending, Tailwind con
 William Mason: TicketMaster API, passing dates as parameters, client-side storage, presentation
 Tabitha Buder: styling
 
+## Screenshot of Logo ##
+
+
 ## Screenshots of Deployed Application ##
-![Screenshot](./assets/T&B_logo.jpg)
+![Screenshot](./assets/images/Tunes-And-Brews-Example-1.png)
+![Screenshot](./assets/images/Tunes-And-Brews-Example-2.png)
+![Screenshot](./assets/images/Tunes-And-Brews-Example-3.png)
+
 
 
 ## Link to Deployed Application ##
