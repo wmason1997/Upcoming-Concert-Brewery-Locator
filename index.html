@@ -9,33 +9,31 @@
 
 <header>
   <div class="container w-sm">
-    <img class="object-none" src="/assets/T&B_logo.jpg">
+    <img class="w-14 h-14 object-contain" src="assets/T&B_logo.jpg" alt="Tunes and Brews Logo">
   </div>
-  <h1 id='page-title'>Tunes and Brews</h1>
+  <h1 class="absolute top-3 right-0 text-xl font-mono" id='page-title'>Tunes and Brews</h1>
 </header>
 <body class="h-screen bg-gradient-to-b from-sky-700 to-sky-100">
-    <section id="description">
+    <section class="absolute top-15 right-10"id="description">
         <h3>We link you up to the newest breweries in your area based on what event you're looking to go to,
             type in the search bar to get started!
         </h3>
     </section>
     
-    <form id="search-bar">
-      <div class="relative text-gray-600">
-        <label for="ticketmaster-search">Search for any city here! Select genres below.</label>
-        <input type="text" name="ticketmaster-search" id="ticketmaster-search" placeholder="Type here to search!" class="bg-white h-10 px-5 pr-10 rounded-full text-sm focus:outline-none">
+    <form class="relative left-96 m-7 flex" id="search-bar">
+      <div class="relative text-gray-600 w-80 content-center">
+        <label for="ticketmaster-search"></label>
+        <input type="text" name="ticketmaster-search" id="ticketmaster-search" placeholder="Type here to search!" class="bg-white h-10 px-5 pr-10 rounded-full text-sm focus:outline-none inset-x-9">
         <button id="search-button" class = "bg-red-500 focus:bg-red-700 object-right rounded-full" type="button">Search!</button>
       </div>
         
-        <input type='text' id="ticketmaster-search" name="ticketmaster-search">
-        
     </form>
 
-    <form class='width: 8rem' id="checkbox">
+    <form class='w-36' id="checkbox">
       <ul class="flex flex-col py4">
         <li>
-          <a href="#" class="flex flex-row items-center h-12 text-gray-500">
-            <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class="bx bx-home"></i></span>
+          <a href="#" class="flex flex-row items-center h-12">
+            <span class="inline-flex items-center justify-center h-8 w-8 text-lg"><i class="bx bx-home"></i></span>
             <input type="checkbox" id="Rap" name="Hip-Hop" value="no">
             <label for="Hip-Hop">Hip-Hop</label><br>
           </a>
@@ -44,8 +42,8 @@
       
       <ul class="flex flex-col py4">
         <li>
-          <a href="#" class="flex flex-row items-center h-12 text-gray-400">
-            <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class="bx bx-home"></i></span>
+          <a href="#" class="flex flex-row items-center h-12">
+            <span class="inline-flex items-center justify-center h-8 w-8 text-lg"><i class="bx bx-home"></i></span>
             <input type="checkbox" id="Rock" name="Rock" value="no">
             <label for="Rock">Rock</label><br>
           </a>
@@ -54,8 +52,8 @@
       
       <ul class="flex flex-col py4">
         <li>
-          <a href="#" class="flex flex-row items-center h-12 text-gray-500">
-            <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class="bx bx-home"></i></span>
+          <a href="#" class="flex flex-row items-center h-12">
+            <span class="inline-flex items-center justify-center h-8 w-8 text-lg"><i class="bx bx-home"></i></span>
             <input type="checkbox" id="Country" name="Country" value="no">
             <label for="Country">Country</label><br>
           </a>
@@ -64,47 +62,28 @@
       
       <ul class="flex flex-col py4">
         <li>
-          <a href="#" class="flex flex-row items-center h-12 text-gray-500">
-            <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class="bx bx-home"></i></span>
+          <a href="#" class="flex flex-row items-center h-12">
+            <span class="inline-flex items-center justify-center h-8 w-8 text-lg"><i class="bx bx-home"></i></span>
             <input type="checkbox" id="Pop" name="Pop" value="no">
             <label for="Pop">Pop</label><br>
           </a>
         </li>
       </ul>
-      
-      <ul class="flex flex-col py4">
-        <li>
-          <a href="#" class="flex flex-row items-center h-12 text-gray-500">
-            <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class="bx bx-home"></i></span>
-            <input type="checkbox" id="Metal" name="Metal" value="no">
-            <label for="Metal">Metal</label><br>
-          </a>
-        </li>
-      </ul>
+    
       </form>
       
     <label for="from">From</label>
-      <input type="text" id="from" name="from">
+      <input class="w-24"type="text" id="from" name="from">
       
     <label for="to">to</label>
-      <input type="text" id="to" name="to">
+      <input class="w-24" type="text" id="to" name="to">
 
-      <section id="ticketmaster-search-container" class="list-container">
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
+      <section id="ticketmaster-search-container" class="w-96 absolute top-52 left-1/3">
         <h4 id="Events-header">Events for: <span id='ticketmaster-search-target'></span></h4>
-        <div id="ticketmaster-api-results-container"></div>
+        <div class="w-96 top-52 left-24" id="ticketmaster-api-results-container"></div>
       </section>
 
-      <section id="brewery-search-container" class="list-container">
+      <section id="brewery-search-container" class="w-96 absolute top-52 left-2/3">
         <h4 id="Events-header">Breweries nearby:<span id='ticketmaster-search-target'></span></h4>
         <div id="brewery-api-results-container"></div>
       </section>
