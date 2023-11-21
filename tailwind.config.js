@@ -1,8 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ['index.html',
-              'script.js',
-              './node_modules/flowbite/**/*.js'
+              'script.js'
 ],
   theme: {
     screens: { 
@@ -11,7 +10,7 @@ module.exports = {
       lg: '980px',
       xl: '1500px',
     },
-    colors: {
+    /*colors: {
       transparent: 'transparent',
       current: 'currentColor',
       black: colors.black,
@@ -19,7 +18,7 @@ module.exports = {
       gray: colors.gray,
       emerald: colors.emerald,
       indigo: colors.indigo,
-      yellow: colors.yellow,
+      yellow: colors.yellow, */
     },
     fontFamily: {
       mono: ['monospace', 'ui-monospace'],
@@ -34,7 +33,6 @@ module.exports = {
         '4xl': '2rem'
       }
     }
-  },
-  plugins: ['flowbite/plugin'],
-}
+  }
+
 
