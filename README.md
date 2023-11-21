@@ -20,7 +20,7 @@ William Mason: TicketMaster API, passing dates as parameters, client-side storag
 Tabitha Buder: styling
 
 ## Screenshots of Deployed Application ##
-
+![Screenshot](./assets/T&B_logo.jpg)
 
 
 ## Link to Deployed Application ##
