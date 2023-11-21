@@ -124,7 +124,7 @@ function showTopTenVenues (searchedCity) {
         var clickCounter = 0;
         clickCounter++;
 
-        console.log(n);
+        //console.log(n);
         //DOM appendage for brewery Api results
         //need to edit this block below played around with some dom appendage to try and remove first results
         //but its 6am and I've been up all night so I'm gonna tap out for now
@@ -144,7 +144,7 @@ function showTopTenVenues (searchedCity) {
         }
       });
     }
-    console.log(listOfEvents);
+    //console.log(listOfEvents);
   });
 }
 
@@ -169,7 +169,7 @@ function venueToBreweriesAPI() {
     .then(function (data) {
       breweryList.push(data);
       //console.log(data)
-      console.log(breweryList);
+      //console.log(breweryList);
     });
 }
 
@@ -217,7 +217,7 @@ $(function () {
     } catch (error) {
       date = null;
     }
-    console.log(date);
+    //console.log(date);
     return date;
   }
 
@@ -255,7 +255,7 @@ if (targetEl.value === 'no') {
   genreApi.push(targetElText);
   targetEl.value = 'yes';
 } else if (targetEl.value === 'yes') {
-    console.log(index);
+    //console.log(index);
     genreApi.splice(index, 1);
     targetEl.value = 'no';
 }
@@ -271,7 +271,7 @@ genreString = genreApi.toString();
     
 
 
-console.log(genreString);
-console.log(genreApi);
+//console.log(genreString);
+//console.log(genreApi);
 })
 
