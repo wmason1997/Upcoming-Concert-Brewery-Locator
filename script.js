@@ -107,6 +107,8 @@ function showTopTenVenues (searchedCity) {
       var concertHeading = document.createElement("button");
       //set an id to track what number the result was in the for loop
       concertHeading.setAttribute("id", i);
+      //add CSS class for clickable styling
+      concertHeading.className = "event-button";
       var concertList = document.createElement("ol");
       var concertListItem = document.createElement("li");
       concertHeading.textContent =
@@ -131,9 +133,17 @@ function showTopTenVenues (searchedCity) {
         if (clickCounter === 1) {
           breweryListEl.innerHTML = ""; // clears previous breweries displayed upon different event clicks
           for (r = 0; r <= 3; r++) {
-            var breweryName = document.createElement("h2");
-            breweryName.textContent = breweryList[n][r].name;
-            breweryListEl.appendChild(breweryName);
+            var breweryButton = document.createElement("button");
+            breweryButton.className = "brewery-button";
+            breweryButton.textContent = breweryList[n][r].name;
+
+            // Add click event to open Google search in new tab
+            breweryButton.addEventListener("click", function() {
+              var searchQuery = encodeURIComponent(this.textContent);
+              window.open("https://www.google.com/search?q=" + searchQuery, "_blank");
+            });
+
+            breweryListEl.appendChild(breweryButton);
             clickCounter = 0;
           }
         } else if (clickCounter === 0) {
@@ -142,9 +152,25 @@ function showTopTenVenues (searchedCity) {
           }
           clickCounter += 1;
         }
+
+        // Auto-scroll to brewery section after displaying results
+        setTimeout(function() {
+          var brewerySection = document.getElementById("brewery-search-container");
+          if (brewerySection) {
+            brewerySection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        }, 500);
       });
     }
     //console.log(listOfEvents);
+
+    // Auto-scroll to events section after search results are displayed
+    setTimeout(function() {
+      var eventsSection = document.getElementById("ticketmaster-search-container");
+      if (eventsSection) {
+        eventsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 600);
   });
 }
 
