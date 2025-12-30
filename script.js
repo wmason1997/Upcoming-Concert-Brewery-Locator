@@ -29,7 +29,7 @@ function getTicketMasterEventsAPI(
   city = "San Diego",
   desiredStartDate = "",
   desiredEndDate = "",
-  keyWord = genreString,
+  classificationIds = genreString,
   radius = "20"
 ) {
   // Check if there is a date range specified
@@ -58,18 +58,25 @@ function getTicketMasterEventsAPI(
       );
   }
 
+  // Build genre filter parameter (comma-separated for OR operation)
+  var genreParams = "";
+  if (classificationIds) {
+    genreParams = "&classificationId=" + classificationIds;
+  }
+
   var requestURL =
     "https://app.ticketmaster.com/discovery/v2/events.json?" +
-    "keyword=" +
-    keyWord +
-    "&city=" +
+    "city=" +
     city +
     "&radius=" +
     radius +
     "&unit=miles" +
     "&size=100" +
     dateParams + // if no date specified this will be empty
+    genreParams + // if no genres specified this will be empty
     "&apikey=Wy4kfV2CuBeyHrZmzpbvUf5VYbT9wXmJ";
+
+  console.log("TicketMaster API URL:", requestURL);
 
   return fetch(requestURL)
     .then(function (response) {
@@ -412,35 +419,40 @@ $(function () {
 var genreApi = [];
 var genreString = "";
 
+// Map checkbox IDs to TicketMaster classification codes
+var genreCodeMap = {
+  "Metal": "KnvZfZ7vAvt",
+  "Rock": "KnvZfZ7vAeA",
+  "Pop": "KnvZfZ7vAev",
+  "Rap": "KnvZfZ7vAv1",  // Hip-Hop
+  "Country": "KnvZfZ7vAv6"  // Country
+};
+
 var checkboxEl = document.getElementById("checkbox");
 
- checkboxEl.addEventListener('click', function(event) {
-var targetEl = (event.target);
-//targetEl.value = 'yes';
-var targetElText = targetEl.attributes.id.textContent;
-var index = genreApi.indexOf(targetElText);
+checkboxEl.addEventListener('click', function(event) {
+  var targetEl = (event.target);
+  var targetElText = targetEl.attributes.id.textContent;
+  var index = genreApi.indexOf(targetElText);
 
-if (targetEl.value === 'no') {
-  genreApi.push(targetElText);
-  targetEl.value = 'yes';
-} else if (targetEl.value === 'yes') {
-    //console.log(index);
+  if (targetEl.value === 'no') {
+    genreApi.push(targetElText);
+    targetEl.value = 'yes';
+  } else if (targetEl.value === 'yes') {
     genreApi.splice(index, 1);
     targetEl.value = 'no';
-}
+  }
 
-//genre codes
-//"KnvZfZ7vAvt" Metal
-//"KnvZfZ7vAeA" Rock
-//"KnvZfZ7vAev" Pop
-//"KnvZfZ7vAv1" Hip-Hop/Rap
-//"KnvZfZ7vAvv" Alternative
+  // Build genre code string for API (comma-separated for OR operation)
+  var genreCodes = genreApi.map(function(genreName) {
+    return genreCodeMap[genreName];
+  }).filter(function(code) {
+    return code !== undefined;
+  });
 
-genreString = genreApi.toString();
-    
+  genreString = genreCodes.join(',');
 
-
-//console.log(genreString);
-//console.log(genreApi);
-})
+  console.log("Selected genres:", genreApi);
+  console.log("Genre codes for API:", genreString);
+});
 
