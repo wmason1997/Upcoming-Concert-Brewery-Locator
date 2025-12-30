@@ -154,25 +154,70 @@ function showTopTenVenues (searchedCity) {
         }
 
         // Auto-scroll to brewery section after displaying results
-        setTimeout(function() {
-          var brewerySection = document.getElementById("brewery-search-container");
-          if (brewerySection) {
-            brewerySection.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          }
-        }, 500);
+        requestAnimationFrame(function() {
+          setTimeout(function() {
+            var brewerySection = document.getElementById("brewery-search-container");
+            if (brewerySection) {
+              brewerySection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              showScrollArrow('breweries');
+            }
+          }, 200);
+        });
       });
     }
     //console.log(listOfEvents);
 
-    // Auto-scroll to events section after search results are displayed
-    setTimeout(function() {
-      var eventsSection = document.getElementById("ticketmaster-search-container");
-      if (eventsSection) {
-        eventsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    }, 600);
+    // Use requestAnimationFrame to ensure DOM is painted before scrolling
+    requestAnimationFrame(function() {
+      setTimeout(function() {
+        var eventsSection = document.getElementById("ticketmaster-search-container");
+        if (eventsSection) {
+          eventsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          // Show down arrow after scrolling
+          showScrollArrow('events');
+        }
+      }, 300);
+    });
   });
 }
+
+// Function to show/hide scroll arrow
+function showScrollArrow(section) {
+  var arrow = document.getElementById('scroll-arrow-' + section);
+  if (arrow) {
+    arrow.style.display = 'flex';
+    // Auto-hide after 5 seconds
+    setTimeout(function() {
+      arrow.style.display = 'none';
+    }, 5000);
+  }
+}
+
+// Add click handlers to scroll arrows
+document.addEventListener('DOMContentLoaded', function() {
+  var eventsArrow = document.getElementById('scroll-arrow-events');
+  var breweriesArrow = document.getElementById('scroll-arrow-breweries');
+
+  if (eventsArrow) {
+    eventsArrow.addEventListener('click', function() {
+      var eventsSection = document.getElementById('ticketmaster-search-container');
+      if (eventsSection) {
+        eventsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        this.style.display = 'none';
+      }
+    });
+  }
+
+  if (breweriesArrow) {
+    breweriesArrow.addEventListener('click', function() {
+      var brewerySection = document.getElementById('brewery-search-container');
+      if (brewerySection) {
+        brewerySection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        this.style.display = 'none';
+      }
+    });
+  }
+});
 
 
 //declared arguments outside of scope for long and lat so they can be called during ticketmaster api fetch
