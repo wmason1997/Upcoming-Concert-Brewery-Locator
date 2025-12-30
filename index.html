@@ -27,94 +27,95 @@
         </p>
     </section>
     
-    <form id="search-bar">
-      <div class="relative text-gray-900 flex flex-col items-center">
-        <label for="ticketmaster-search">Search for any city here! Select genres below.</label>
-        <input type="text" name="ticketmaster-search" id="ticketmaster-search" placeholder="Type here to search!" class="bg-white h-10 px-5 pr-10 rounded-full text-sm focus:outline-none">
-        <button id="search-button" class = "bg-red-500 object-right rounded-full" type="button">
-          <span class="w-48">
-            Search!
-          </span>
-        </button>
+    <form id="search-bar" class="mt-8 mb-6">
+      <div class="flex flex-col items-center space-y-4">
+        <label for="ticketmaster-search" class="text-lg font-medium text-gray-800">Search for any city here! Select genres below.</label>
+        <div class="flex items-center gap-3 w-full max-w-2xl">
+          <input
+            type="text"
+            name="ticketmaster-search"
+            id="ticketmaster-search"
+            placeholder="Enter city name (e.g., San Diego)"
+            class="flex-1 bg-white h-12 px-6 rounded-full text-base focus:outline-none focus:ring-2 focus:ring-red-500 shadow-md border border-gray-200"
+          >
+          <button
+            id="search-button"
+            class="bg-red-500 hover:bg-red-600 text-white font-semibold px-8 py-3 rounded-full transition duration-200 shadow-md hover:shadow-lg"
+            type="button"
+          >
+            Search
+          </button>
+        </div>
       </div>
     </form>
 
     <form class='flex justify-center' id="checkbox">
-      <div class="min-h-screen flex flex-row">
-      <div class="flex flex-col w-9/10 bg-white rounded-r-3xl overflow-hidden">
-      <ul class="flex flex-col py4 ">
-        <li>
-          <a href="#" class="flex flex-row items-center h-12 text-gray-500">
-            <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class="bx bx-home"></i></span>
-            <input type="checkbox" id="Rap" name="Hip-Hop" value="no">
-            <label for="Hip-Hop">Hip-Hop</label><br>
-          </a>
-        </li>
-      </ul>
-      
-      <ul class="flex flex-col py4">
-        <li>
-          <a href="#" class="flex flex-row items-center h-12 text-gray-500">
-            <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class="bx bx-home"></i></span>
-            <input type="checkbox" id="Rock" name="Rock" value="no">
-            <label for="Rock">Rock</label><br>
-          </a>
-        </li>
-      </ul>
-      
-      <ul class="flex flex-col py4">
-        <li>
-          <a href="#" class="flex flex-row items-center h-12 text-gray-500">
-            <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class="bx bx-home"></i></span>
-            <input type="checkbox" id="Country" name="Country" value="no">
-            <label for="Country">Country</label><br>
-          </a>
-        </li>
-      </ul>  
-      
-      <ul class="flex flex-col py4">
-        <li>
-          <a href="#" class="flex flex-row items-center h-12 text-gray-500">
-            <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class="bx bx-home"></i></span>
-            <input type="checkbox" id="Pop" name="Pop" value="no">
-            <label for="Pop">Pop</label><br>
-          </a>
-        </li>
-      </ul>
-      
-      <ul class="flex flex-col py4">
-        <li>
-          <a href="#" class="flex flex-row items-center h-12 text-gray-500">
-            <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class="bx bx-home"></i></span>
-            <input type="checkbox" id="Metal" name="Metal" value="no">
-            <label for="Metal">Metal</label><br>
-          </a>
-        </li>
-      </ul>
+      <div class="flex flex-col bg-white rounded-3xl p-6 shadow-lg">
+        <h3 class="text-lg font-semibold text-gray-700 mb-4">Select Genres</h3>
+        <div class="space-y-3">
+          <label class="flex items-center space-x-3 cursor-pointer hover:bg-gray-50 p-2 rounded transition">
+            <input type="checkbox" id="Rap" name="Hip-Hop" value="no" class="w-5 h-5 text-red-500 rounded focus:ring-2 focus:ring-red-500">
+            <span class="text-gray-700">Hip-Hop</span>
+          </label>
+
+          <label class="flex items-center space-x-3 cursor-pointer hover:bg-gray-50 p-2 rounded transition">
+            <input type="checkbox" id="Rock" name="Rock" value="no" class="w-5 h-5 text-red-500 rounded focus:ring-2 focus:ring-red-500">
+            <span class="text-gray-700">Rock</span>
+          </label>
+
+          <label class="flex items-center space-x-3 cursor-pointer hover:bg-gray-50 p-2 rounded transition">
+            <input type="checkbox" id="Country" name="Country" value="no" class="w-5 h-5 text-red-500 rounded focus:ring-2 focus:ring-red-500">
+            <span class="text-gray-700">Country</span>
+          </label>
+
+          <label class="flex items-center space-x-3 cursor-pointer hover:bg-gray-50 p-2 rounded transition">
+            <input type="checkbox" id="Pop" name="Pop" value="no" class="w-5 h-5 text-red-500 rounded focus:ring-2 focus:ring-red-500">
+            <span class="text-gray-700">Pop</span>
+          </label>
+
+          <label class="flex items-center space-x-3 cursor-pointer hover:bg-gray-50 p-2 rounded transition">
+            <input type="checkbox" id="Metal" name="Metal" value="no" class="w-5 h-5 text-red-500 rounded focus:ring-2 focus:ring-red-500">
+            <span class="text-gray-700">Metal</span>
+          </label>
+        </div>
+      </div>
+    </form>
+    
+    <div class="flex justify-center mt-6 mb-8">
+      <div class="bg-white rounded-2xl p-6 shadow-lg flex items-center gap-6">
+        <div class="flex flex-col">
+          <label for="from" class="text-sm font-medium text-gray-600 mb-2">From Date:</label>
+          <input
+            type="text"
+            id="from"
+            name="from"
+            class="bg-gray-50 border border-gray-300 rounded-lg px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+          >
+        </div>
+        <div class="flex flex-col">
+          <label for="to" class="text-sm font-medium text-gray-600 mb-2">To Date:</label>
+          <input
+            type="text"
+            id="to"
+            name="to"
+            class="bg-gray-50 border border-gray-300 rounded-lg px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+          >
+        </div>
       </div>
     </div>
-      </form>
-    
-    <div class="flex justify-center">
-    <label class="" for="from">From: <input type="text" id="from" name="from"></label>
-    <label for="to">To: <input type="text" id="to" name="to"></label>
-    </div>
 
-      <section class = "flex justify-center" id="ticketmaster-search-container" class="list-container">
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <h4 id="Events-header">Events for: <span id='ticketmaster-search-target'></span></h4>
-        <div id="ticketmaster-api-results-container"></div>
+      <section class="flex justify-center mt-12" id="ticketmaster-search-container">
+        <div class="w-full max-w-4xl">
+          <h4 class="text-xl font-semibold mb-4 text-gray-800">Events for: <span id='ticketmaster-search-target'></span></h4>
+          <div id="ticketmaster-api-results-container"></div>
+        </div>
       </section>
 
-      <section class = "flex justify-center" id="brewery-search-container" class="list-container">
-        <h4 id="Events-header">Breweries nearby:<span id='ticketmaster-search-target'></span></h4>
-        <div id="brewery-api-results-container"></div>
+      <section class="flex justify-center mt-8" id="brewery-search-container">
+        <div class="w-full max-w-4xl">
+          <h4 class="text-xl font-semibold mb-4 text-gray-800">Breweries nearby: <span id='ticketmaster-search-target'></span></h4>
+          <div id="brewery-api-results-container"></div>
+        </div>
       </section>
     
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.7"></script>
