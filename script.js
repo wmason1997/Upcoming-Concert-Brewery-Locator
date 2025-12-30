@@ -90,6 +90,12 @@ function showTopTenVenues (searchedCity) {
     breweryList = []; // reset so that each new search can use the code with newly initialized variables
     argums = { venueLat: '', venueLon: ''}; // reset so that each new search can use the code with newly initialized variables
     eventsEl.innerHTML = ''; // added to fix issue similar to repeated brewery appending
+
+    // Hide brewery section when starting a new search
+    var brewerySection = document.getElementById("brewery-search-container");
+    if (brewerySection) {
+      brewerySection.style.display = 'none';
+    }
     getTicketMasterEventsAPI(city=searchedCity, desiredStartDate = localStorage.getItem('storedFrom'), desiredEndDate = localStorage.getItem('storedTo'))
       .then(function (response) {
         for (var i = 0; listOfEvents.length < 10; i++) { 
@@ -129,6 +135,20 @@ function showTopTenVenues (searchedCity) {
         var clickCounter = 0;
         clickCounter++;
 
+        // Update brewery header with concert name and date
+        var selectedConcertName = listOfEvents[n].name;
+        var selectedConcertDate = listOfEvents[n].dates.start.localDate;
+        var breweryHeader = document.querySelector("#brewery-search-container h4");
+        if (breweryHeader) {
+          breweryHeader.innerHTML = "Breweries near " + selectedConcertName + " concert on " + selectedConcertDate + ":";
+        }
+
+        // Show brewery section
+        var brewerySection = document.getElementById("brewery-search-container");
+        if (brewerySection) {
+          brewerySection.style.display = 'flex';
+        }
+
         // Show brewery arrow immediately (before trying to display breweries)
         console.log("Event clicked, attempting to show brewery arrow");
         var breweryArrow = document.getElementById('scroll-arrow-breweries');
@@ -147,7 +167,6 @@ function showTopTenVenues (searchedCity) {
         // Auto-scroll to brewery section
         requestAnimationFrame(function() {
           setTimeout(function() {
-            var brewerySection = document.getElementById("brewery-search-container");
             if (brewerySection) {
               brewerySection.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
@@ -204,6 +223,39 @@ function showTopTenVenues (searchedCity) {
       setTimeout(function() {
         console.log("Search completed, attempting to show events arrow");
 
+        // Build genre display string
+        var genreDisplay = genreApi.length > 0 ? genreApi.join(", ") : "All Genres";
+
+        // Get date range
+        var fromDate = localStorage.getItem("storedFrom");
+        var toDate = localStorage.getItem("storedTo");
+        var dateDisplay = "";
+
+        if (fromDate && toDate) {
+          // Remove quotes from localStorage values
+          fromDate = fromDate.replace(/"/g, '');
+          toDate = toDate.replace(/"/g, '');
+          dateDisplay = " between " + fromDate + " and " + toDate;
+        } else if (fromDate) {
+          fromDate = fromDate.replace(/"/g, '');
+          dateDisplay = " from " + fromDate;
+        } else if (toDate) {
+          toDate = toDate.replace(/"/g, '');
+          dateDisplay = " until " + toDate;
+        }
+
+        // Update the events header
+        var eventsHeader = document.querySelector("#ticketmaster-search-container h4");
+        if (eventsHeader) {
+          eventsHeader.innerHTML = "Events for " + genreDisplay + dateDisplay + ":";
+        }
+
+        // Show events section
+        var eventsSection = document.getElementById("ticketmaster-search-container");
+        if (eventsSection) {
+          eventsSection.style.display = 'flex';
+        }
+
         // Show events arrow immediately
         var eventsArrow = document.getElementById('scroll-arrow-events');
         console.log("Events arrow element:", eventsArrow);
@@ -219,7 +271,6 @@ function showTopTenVenues (searchedCity) {
         }
 
         // Then scroll
-        var eventsSection = document.getElementById("ticketmaster-search-container");
         if (eventsSection) {
           eventsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
