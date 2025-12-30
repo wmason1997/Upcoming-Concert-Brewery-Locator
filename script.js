@@ -8,6 +8,9 @@ var breweryListEl = document.getElementById("brewery-api-results-container");
 var storedFrom = localStorage.getItem("storedFrom");
 var storedTo = localStorage.getItem("storedTo");
 
+// Store the currently searched city for brewery searches
+var currentSearchedCity = "";
+
 console.log("storedFrom: ", storedFrom);
 console.log("storedTo:", storedTo);
 
@@ -82,6 +85,7 @@ function getTicketMasterEventsAPI(
 var listOfEvents = [];
 
 function showTopTenVenues (searchedCity) {
+    currentSearchedCity = searchedCity; // Store the city for brewery searches
     listOfEvents = []; // reset so that each new search can use the code with newly initialized variables
     breweryList = []; // reset so that each new search can use the code with newly initialized variables
     argums = { venueLat: '', venueLon: ''}; // reset so that each new search can use the code with newly initialized variables
@@ -111,8 +115,7 @@ function showTopTenVenues (searchedCity) {
       concertHeading.className = "event-button";
       var concertList = document.createElement("ol");
       var concertListItem = document.createElement("li");
-      concertHeading.textContent =
-        "Concert: " + concertName + ", Date: " + concertDate;
+      concertHeading.textContent = concertName + " • " + concertDate;
       concertListItem.appendChild(concertHeading);
       concertList.appendChild(concertListItem);
       eventsEl.appendChild(concertList);
@@ -126,43 +129,72 @@ function showTopTenVenues (searchedCity) {
         var clickCounter = 0;
         clickCounter++;
 
+        // Show brewery arrow immediately (before trying to display breweries)
+        console.log("Event clicked, attempting to show brewery arrow");
+        var breweryArrow = document.getElementById('scroll-arrow-breweries');
+        console.log("Brewery arrow element:", breweryArrow);
+        if (breweryArrow) {
+          breweryArrow.style.display = 'flex';
+          console.log("Brewery arrow display set to flex");
+          // Auto-hide after 5 seconds
+          setTimeout(function() {
+            breweryArrow.style.display = 'none';
+          }, 5000);
+        } else {
+          console.log("Brewery arrow element not found!");
+        }
+
+        // Auto-scroll to brewery section
+        requestAnimationFrame(function() {
+          setTimeout(function() {
+            var brewerySection = document.getElementById("brewery-search-container");
+            if (brewerySection) {
+              brewerySection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+          }, 200);
+        });
+
         //console.log(n);
         //DOM appendage for brewery Api results
         //need to edit this block below played around with some dom appendage to try and remove first results
         //but its 6am and I've been up all night so I'm gonna tap out for now
         if (clickCounter === 1) {
           breweryListEl.innerHTML = ""; // clears previous breweries displayed upon different event clicks
-          for (r = 0; r <= 3; r++) {
-            var breweryButton = document.createElement("button");
-            breweryButton.className = "brewery-button";
-            breweryButton.textContent = breweryList[n][r].name;
 
-            // Add click event to open Google search in new tab
-            breweryButton.addEventListener("click", function() {
-              var searchQuery = encodeURIComponent(this.textContent);
-              window.open("https://www.google.com/search?q=" + searchQuery, "_blank");
-            });
+          // Check if brewery data exists for this event
+          if (breweryList[n] && breweryList[n].length > 0) {
+            for (r = 0; r < breweryList[n].length && r < 4; r++) {
+              if (breweryList[n][r] && breweryList[n][r].name) {
+                var breweryButton = document.createElement("button");
+                breweryButton.className = "brewery-button";
+                breweryButton.textContent = breweryList[n][r].name;
 
-            breweryListEl.appendChild(breweryButton);
-            clickCounter = 0;
+                // Add click event to open Google search in new tab
+                breweryButton.addEventListener("click", function() {
+                  var searchQuery = encodeURIComponent(this.textContent + " " + currentSearchedCity);
+                  window.open("https://www.google.com/search?q=" + searchQuery, "_blank");
+                });
+
+                breweryListEl.appendChild(breweryButton);
+              }
+            }
+          } else {
+            var noBreweries = document.createElement("p");
+            noBreweries.textContent = "No breweries found nearby.";
+            noBreweries.className = "text-gray-600 text-center";
+            breweryListEl.appendChild(noBreweries);
           }
+          clickCounter = 0;
         } else if (clickCounter === 0) {
-          for (r = 0; r <= 3; r++) {
-            breweryName.textContent = breweryList[n][r].name;
+          if (breweryList[n] && breweryList[n].length > 0) {
+            for (r = 0; r < breweryList[n].length && r < 4; r++) {
+              if (breweryList[n][r] && breweryList[n][r].name) {
+                breweryName.textContent = breweryList[n][r].name;
+              }
+            }
           }
           clickCounter += 1;
         }
-
-        // Auto-scroll to brewery section after displaying results
-        requestAnimationFrame(function() {
-          setTimeout(function() {
-            var brewerySection = document.getElementById("brewery-search-container");
-            if (brewerySection) {
-              brewerySection.scrollIntoView({ behavior: 'smooth', block: 'center' });
-              showScrollArrow('breweries');
-            }
-          }, 200);
-        });
       });
     }
     //console.log(listOfEvents);
@@ -170,11 +202,26 @@ function showTopTenVenues (searchedCity) {
     // Use requestAnimationFrame to ensure DOM is painted before scrolling
     requestAnimationFrame(function() {
       setTimeout(function() {
+        console.log("Search completed, attempting to show events arrow");
+
+        // Show events arrow immediately
+        var eventsArrow = document.getElementById('scroll-arrow-events');
+        console.log("Events arrow element:", eventsArrow);
+        if (eventsArrow) {
+          eventsArrow.style.display = 'flex';
+          console.log("Events arrow display set to flex");
+          // Auto-hide after 5 seconds
+          setTimeout(function() {
+            eventsArrow.style.display = 'none';
+          }, 5000);
+        } else {
+          console.log("Events arrow element not found!");
+        }
+
+        // Then scroll
         var eventsSection = document.getElementById("ticketmaster-search-container");
         if (eventsSection) {
           eventsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          // Show down arrow after scrolling
-          showScrollArrow('events');
         }
       }, 300);
     });
