@@ -23,9 +23,9 @@ Tabitha Buder: styling
 
 
 ## Screenshots of Deployed Application ##
-![Screenshot](./assets/images/Tunes-And-Brews-Example-1.png)
-![Screenshot](./assets/images/Tunes-And-Brews-Example-2.png)
-![Screenshot](./assets/images/Tunes-And-Brews-Example-3.png)
+![Screenshot](./assets/images/Tunes-And-Brews-Example-4.png)
+![Screenshot](./assets/images/Tunes-And-Brews-Example-5.png)
+![Screenshot](./assets/images/Tunes-And-Brews-Example-6.png)
 
 
 
