@@ -3,7 +3,7 @@
 ## Description ##
 Have you ever been thinking about wanting to see more live music, but get confused before you get started? Where, when, and what sort of act? Where am I going to loosen up with a couple rounds beforehand? 
 
-Well, fret no more as we have solved this problem with an application that integrates both the TicketMaster API and a brewery locator API. Tunes and Brews allows you to search for music acts and returns top results with the venues’ three nearest breweries.
+Well, fret no more as we have solved this problem with an application that integrates both the TicketMaster API (https://developer.ticketmaster.com/products-and-docs/apis/discovery-api/v2/) and a brewery locator API (https://www.openbrewerydb.org/). Tunes and Brews allows you to search for music acts and returns top results with the venues’ three nearest breweries.
 
 ## Technologies Used ##
 JavaScript, CSS, HTML, and Tailwind were the tools we used to make this project. The application was configured in Visual Studio Code as the IDE.
